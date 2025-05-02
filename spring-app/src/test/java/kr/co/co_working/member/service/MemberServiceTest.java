@@ -72,7 +72,7 @@ class MemberServiceTest {
 
         MemberRequestDto.CREATE createDto = getCreateDto();
         service.createMember(createDto);
-        MemberRequestDto.READ readDto = new MemberRequestDto.READ("무개");
+        MemberRequestDto.READ readDto = new MemberRequestDto.READ();
 
         /* when */
         List<MemberResponseDto> members = service.readMemberList(readDto);

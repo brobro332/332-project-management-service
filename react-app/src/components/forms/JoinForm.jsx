@@ -35,7 +35,7 @@ const JoinForm = () => {
 
     try {
       const result = await axios.post(
-        `http://${config.API_BASE_URL}/api/v1/member`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/member`,
         body,
         {
           headers: {

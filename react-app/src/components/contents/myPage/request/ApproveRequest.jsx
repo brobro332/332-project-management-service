@@ -19,7 +19,7 @@ const ApproveRequest = () => {
   const readInvitation = useCallback(async () => {
     try {
       const result = await axios.get(
-        `http://${config.API_BASE_URL}/api/v1/invitation`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/invitation`,
         {
           params: { 
             workspaceName: workspaceName?.trim(),

@@ -16,11 +16,9 @@ public class ProjectRequestDto {
     @Getter
     @Setter
     public static class READ {
-        private String name;
         private Long workspaceId;
 
-        public READ(String name, Long workspaceId) {
-            this.name = name;
+        public READ(Long workspaceId) {
             this.workspaceId = workspaceId;
         }
     }

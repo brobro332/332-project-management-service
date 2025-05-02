@@ -1,21 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { Container, AppBar, Toolbar, Typography, Box, Drawer, List, ListItem, ListItemText, CssBaseline, IconButton, Snackbar, Alert, MenuItem, Menu } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Container, AppBar, Toolbar, Typography, Box, Drawer, List, ListItem, ListItemText, CssBaseline, IconButton, Snackbar, Alert, MenuItem, Menu, FormControl, InputLabel, Select } from '@mui/material';
 import AppsIcon from '@mui/icons-material/Apps';
+import SettingsIcon from '@mui/icons-material/Settings';
 import CheckIcon from '@mui/icons-material/Check';
 import WorkspaceMain from '../contents/workspace/WorkspaceMain';
 import { useNavigate } from 'react-router-dom';
 import MyPageMain from '../contents/myPage/MyPageMain';
+import ProjectMain from '../contents/project/ProjectMain';
+import config from "../../config";
+import axios from 'axios';
+import { setWorkspaceList, setWorkspace } from '../../features/workspace/workspaceSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Main = () => {
   const [selectedMenu, setSelectedMenu] = useState('대시보드');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const dispatch = useDispatch();
+  const workspaceList = useSelector((state) => state.workspace.workspaceList);
+  const workspace = useSelector((state) => state.workspace.workspace);
   
   const open = Boolean(anchorEl);
+
+  const readWorkspaceList = useCallback(async () => {
+    try {
+      const response = await axios.get(`${config.API_BASE_URL}:${config.API_PORT}/api/v1/workspace/workspaceList`, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        const workspaceList = response.data.data;
+
+        if (workspaceList.length > 0) {
+          dispatch(setWorkspaceList(workspaceList));
+          dispatch(setWorkspace(workspaceList[0]));
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     setOpenSnackbar(true);
   }, []);
+
+  useEffect(() => {
+    readWorkspaceList();
+  }, [readWorkspaceList]);
 
   const navigate = useNavigate();
 
@@ -48,12 +80,9 @@ const Main = () => {
             <Typography variant="body1">여기는 타임라인 페이지입니다.</Typography>
           </div>
         );
-      case '태스크':
+      case '프로젝트':
         return (
-          <div>
-            <Typography variant="h5">태스크</Typography>
-            <Typography variant="body1">여기는 태스크 페이지입니다.</Typography>
-          </div>
+          <ProjectMain/>
         );
       case '스프린트':
         return (
@@ -64,7 +93,7 @@ const Main = () => {
         );
       case '워크스페이스':
         return (
-          <WorkspaceMain />
+          <WorkspaceMain/>
         );
       case '마이페이지':
         return (
@@ -126,7 +155,6 @@ const Main = () => {
                   horizontal: 'right',
               }}>
               <MenuItem onClick={() => handleMenuClick('마이페이지')}>마이페이지</MenuItem>
-              <MenuItem onClick={() => handleMenuClick('워크스페이스')}>워크스페이스</MenuItem>
               <MenuItem onClick={() => navigate('/')}>로그아웃</MenuItem>
             </Menu>
           </Toolbar>
@@ -149,6 +177,48 @@ const Main = () => {
         variant='permanent'
         anchor='left'
         >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <FormControl variant="filled" sx={{ 
+              width: "70%",
+              backgroundColor: "#fff",
+              mt: 2,
+              ml: 1,
+              borderRadius: 1
+            }}>
+              <InputLabel id="select-workspace">워크스페이스 선택</InputLabel>
+              {workspace && (
+                <Select
+                  labelId="select-workspace"
+                  id="select-workspace"
+                  size="small"
+                  value={workspace?.id}
+                  label="워크스페이스 선택"
+                  onChange={(e) => {
+                    const selectedWorkspace = workspaceList.find((workspace) => workspace.id === e.target.value);
+                    dispatch(setWorkspace(selectedWorkspace));
+                  }}
+                >
+                  {workspaceList.map((workspace) => (
+                    <MenuItem key={workspace.id} value={workspace.id}>
+                      {workspace.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            </FormControl>
+            <IconButton
+              size="large"
+              sx={{
+                mt: 2
+              }}
+              edge="end"
+              color="inherit"
+              onClick={() => handleMenuClick('워크스페이스')}
+            >
+              <SettingsIcon />
+            </IconButton>
+          </Box>
+          
           <List sx={{ size: 'lg' }}>
             <ListItem button='true' onClick={() => handleMenuClick('대시보드')}>
               <ListItemText primary='대시보드' />
@@ -156,9 +226,11 @@ const Main = () => {
             <ListItem button='true' onClick={() => handleMenuClick('타임라인')}>
               <ListItemText primary='타임라인' />
             </ListItem>
-            <ListItem button='true' onClick={() => handleMenuClick('태스크')}>
-              <ListItemText primary='태스크' />
-            </ListItem>
+            {workspaceList.length > 0 && (
+              <ListItem button='true' onClick={() => handleMenuClick('프로젝트')}>
+                <ListItemText primary='프로젝트' />
+              </ListItem>
+            )}
             <ListItem button='true' onClick={() => handleMenuClick('스프린트')}>
               <ListItemText primary='스프린트' />
             </ListItem>

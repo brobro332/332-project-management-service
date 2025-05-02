@@ -32,6 +32,9 @@ public class SecurityConfig {
         AUTH_IGNORE_LIST.add(new Endpoint("/welcome", HttpMethod.GET));
         AUTH_IGNORE_LIST.add(new Endpoint("/api/v1/member", HttpMethod.POST));
         AUTH_IGNORE_LIST.add(new Endpoint("/api/v1/authentication", HttpMethod.POST));
+        AUTH_IGNORE_LIST.add(new Endpoint("/swagger-ui/**", HttpMethod.GET));
+        AUTH_IGNORE_LIST.add(new Endpoint("/v3/api-docs/**", HttpMethod.GET));
+        AUTH_IGNORE_LIST.add(new Endpoint("/swagger-ui.html", HttpMethod.GET));
     }
 
     private record Endpoint(String url, HttpMethod method) { }

@@ -20,7 +20,7 @@ const ManageInvitation = ({ selectedWorkspace }) => {
   const readInvitation = useCallback(async () => {
     try {
       const result = await axios.get(
-        `http://${config.API_BASE_URL}/api/v1/invitation`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/invitation`,
         {
           params: { 
             memberEmail: memberEmail?.trim(),
@@ -50,7 +50,7 @@ const ManageInvitation = ({ selectedWorkspace }) => {
   const updateInvitation = async (row, flag) => {
     try {
       const result = await axios.put(
-        `http://${config.API_BASE_URL}/api/v1/invitation`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/invitation`,
         {
           memberEmail: row.email,
           workspaceId: selectedWorkspace,
@@ -76,7 +76,7 @@ const ManageInvitation = ({ selectedWorkspace }) => {
   const deleteInvitation = async (row) => {
     try {
       const result = await axios.delete(
-        `http://${config.API_BASE_URL}/api/v1/invitation`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/invitation`,
         {
           data: {
             id: row.id

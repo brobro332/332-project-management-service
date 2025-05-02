@@ -28,7 +28,7 @@ const MemberTable = ({ memberList, page, workspace, onPageChange, onChange }) =>
   const updateWorkspace = async (row) => {
     try {
       const result = await axios.put(
-        `http://${config.API_BASE_URL}/api/v1/workspace/` + workspace.id,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/workspace/` + workspace.id,
         { leader: row.email },
         {
           headers: {
@@ -49,7 +49,7 @@ const MemberTable = ({ memberList, page, workspace, onPageChange, onChange }) =>
   const removeMemberFromWorkspace = async (row) => {
     try {
       const result = await axios.delete(
-        `http://${config.API_BASE_URL}/api/v1/workspace/` + row.email + "/" + workspace.id,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/workspace/` + row.email + "/" + workspace.id,
         {
           headers: {
             "Content-Type": "application/json; charset=UTF-8",

@@ -18,7 +18,7 @@ const UpdateMember = ({
     setIsLoading(true);
     try {
       const result = await axios.put(
-        `http://${config.API_BASE_URL}/api/v1/member`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/member`,
         {
           name: name,
           description: description

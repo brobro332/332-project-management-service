@@ -15,7 +15,7 @@ const CreateRequest = () => {
   const readWorkspaceListNotJoined = useCallback(async () => {
     try {
       const result = await axios.get(
-        `http://${config.API_BASE_URL}/api/v1/workspace/workspaceList-not-joined`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/workspace/workspaceList-not-joined`,
         {
           params: { 
             workspaceName: workspaceName?.trim(),
@@ -41,7 +41,7 @@ const CreateRequest = () => {
   const createInvitation = async (row) => {
     try {
       const result = await axios.post(
-        `http://${config.API_BASE_URL}/api/v1/invitation`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/invitation`,
       {
           workspaceId: row.id,
           requesterType: 'MEMBER'
@@ -65,7 +65,7 @@ const CreateRequest = () => {
   const deleteInvitation = async (row) => {
     try {
       const result = await axios.delete(
-        `http://${config.API_BASE_URL}/api/v1/invitation`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/invitation`,
         {
           data: {
             id: row.invitationId

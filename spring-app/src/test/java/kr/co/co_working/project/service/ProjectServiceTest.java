@@ -87,7 +87,7 @@ class ProjectServiceTest {
         service.createProject(projectDto);
 
         /* when */
-        List<ProjectResponseDto> projects = service.readProjectList(new ProjectRequestDto.READ("젝트", teamId));
+        List<ProjectResponseDto> projects = service.readProjectList(new ProjectRequestDto.READ(teamId));
 
         /* then */
         Assertions.assertEquals(1, projects.size());

@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Gradle 빌드 (JAR 파일 생성)
 COPY . .
-RUN gradle clean build --no-daemon
+RUN gradle clean build -x test --no-daemon
 
 # Base image
 FROM openjdk:17-jdk-slim

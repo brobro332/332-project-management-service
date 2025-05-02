@@ -16,7 +16,7 @@ const CreateInvitation = ({ workspace }) => {
   const readMemberListNotInWorkspace = useCallback(async () => {
     try {
       const result = await axios.get(
-        `http://${config.API_BASE_URL}/api/v1/member/memberList-not-in-workspace`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/member/memberList-not-in-workspace`,
         {
           params: { 
             email: email?.trim(),
@@ -44,7 +44,7 @@ const CreateInvitation = ({ workspace }) => {
   const createInvitation = async (row) => {
     try {
       const result = await axios.post(
-        `http://${config.API_BASE_URL}/api/v1/invitation`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/invitation`,
         {
           memberEmail: row.email,
           workspaceId: workspace,
@@ -69,7 +69,7 @@ const CreateInvitation = ({ workspace }) => {
   const deleteInvitation = async (row) => {
     try {
       const result = await axios.delete(
-        `http://${config.API_BASE_URL}/api/v1/invitation`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/invitation`,
         {
           data: {
             id: row.invitationId

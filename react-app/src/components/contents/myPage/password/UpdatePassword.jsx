@@ -28,7 +28,7 @@ const UpdatePassword = ({
       };
 
       const result = await axios.put(
-        `http://${config.API_BASE_URL}/api/v1/member/password"`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/member/password"`,
         body,
         {
           headers: {

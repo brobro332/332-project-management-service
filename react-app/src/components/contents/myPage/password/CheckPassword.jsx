@@ -18,7 +18,7 @@ const CheckPassword = ({
     setIsLoading(true);
     try {
       const result = await axios.post(
-        `http://${config.API_BASE_URL}:8080/api/v1/authorization`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/authorization`,
         {
           password: password
         },

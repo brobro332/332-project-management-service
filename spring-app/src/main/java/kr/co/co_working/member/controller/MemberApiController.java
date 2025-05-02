@@ -1,12 +1,16 @@
 package kr.co.co_working.member.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import kr.co.co_working.common.dto.ResponseDto;
-import kr.co.co_working.invitation.dto.InvitationRequestDto;
 import kr.co.co_working.member.dto.MemberRequestDto;
 import kr.co.co_working.member.service.MemberService;
-import kr.co.co_working.workspace.dto.WorkspaceRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.NoSuchElementException;
 
 @RestController
@@ -14,15 +18,18 @@ import java.util.NoSuchElementException;
 public class MemberApiController {
     private final MemberService service;
 
-    /**
-     * createMember : Member 등록
-     * @param dto
-     * @return
-     * @throws NoSuchElementException
-     * @throws Exception
-     */
+    @Operation(summary = "멤버 등록", description = "새로운 멤버를 등록합니다.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "멤버 등록 완료"),
+        @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터")
+    })
     @PostMapping("/api/v1/member")
-    public ResponseDto<?> createMember(@RequestBody MemberRequestDto.CREATE dto) throws NoSuchElementException, Exception {
+    public ResponseDto<?> createMember(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "멤버 등록 요청 DTO",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = MemberRequestDto.CREATE.class)))
+            @RequestBody MemberRequestDto.CREATE dto) throws NoSuchElementException, Exception {
         service.createMember(dto);
 
         return ResponseDto.ofSuccess("멤버 등록에 성공했습니다.");

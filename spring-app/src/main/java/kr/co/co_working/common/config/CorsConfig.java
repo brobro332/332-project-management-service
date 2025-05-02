@@ -15,7 +15,7 @@ public class CorsConfig {
     @Primary
     public CorsConfigurationSource corsConfiguration() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000", "http://158.180.84.53:3000"));
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000", "http://158.180.84.53:3000", "http://localhost:8080"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

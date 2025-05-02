@@ -15,7 +15,7 @@ const LoginForm = () => {
   const handleLogin = async () => {
     try {
       const result = await axios.post(
-        `http://${config.API_BASE_URL}/api/v1/authentication`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/authentication`,
         { 
           email: email,
           password: password

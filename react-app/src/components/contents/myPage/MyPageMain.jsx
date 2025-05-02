@@ -21,7 +21,7 @@ const MyPageMain = () => {
 
   const readMember = async () => {
     try {
-      const response = await axios.get(`http://${config.API_BASE_URL}/api/v1/member`, {
+      const response = await axios.get(`${config.API_BASE_URL}:${config.API_PORT}/api/v1/member`, {
         withCredentials: true,
       });
       if (response.status === 200) {
@@ -39,7 +39,7 @@ const MyPageMain = () => {
   const deleteMember = async () => {
     try {
       const resultObject = await axios.delete(
-        `http://${config.API_BASE_URL}/api/v1/member`,
+        `${config.API_BASE_URL}:${config.API_PORT}/api/v1/member`,
         {
           withCredentials: true
         }

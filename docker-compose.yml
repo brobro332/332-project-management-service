@@ -27,16 +27,16 @@ services:
     networks:
       - app-network
 
-  react-app:
-    container_name: react-app
-    build: ./react-app
-    image: react-app
-    ports:
-      - "3000:80"
-    volumes:
-      - ./react-app:/app
-    networks:
-      - app-network
+#  react-app:
+#    container_name: react-app
+#    build: ./react-app
+#    image: react-app
+#    ports:
+#      - "3000:80"
+#    volumes:
+#      - ./react-app:/app
+#    networks:
+#      - app-network
 
 networks:
   app-network:
